@@ -3,6 +3,8 @@
     <style name="Base.Theme.TimeToFocus_Pomodoro" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:colorBackground">@color/blueberry_deep</item>
+        <item name="android:statusBarColor">#00000000</item>
     </style>
 
     <style name="Theme.TimeToFocus_Pomodoro" parent="Base.Theme.TimeToFocus_Pomodoro" />

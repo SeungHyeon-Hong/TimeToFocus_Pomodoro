@@ -1,7 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    tools:context=".PomodoroTimerFragment" />
+    android:padding="30dp"
+    tools:context=".PomodoroTimerFragment">
+
+    <Space
+        android:id="@+id/pomodoroTimerSpaceStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--setTimerLayout-->
+    <LinearLayout
+        android:id="@+id/setTimerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewClock"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:scaleType="fitEnd"
+            android:src="@drawable/schedule_fill0_wght300_grad0_opsz48"
+            android:textColor="@color/blueberry_lighter" />
+
+        <TextView
+            android:id="@+id/textViewTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="집중 30:00\n휴식   5:00"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/blueberry_lighter" />
+    </LinearLayout>
+
+    <Space
+        android:id="@+id/pomodoroTimerSpace1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <!--layoutMainContent-->
+    <LinearLayout
+        android:id="@+id/layoutMainContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layoutPlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/imageViewPlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/arrow_forward_ios_fill0_wght300_grad0_opsz48" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutRunning"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/textViewStateMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="지금은 집중 시간입니다"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/blueberry_lighter" />
+
+            <TextView
+                android:id="@+id/textViewCountdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                android:textColor="@color/blueberry_lighter" />
+
+            <ImageView
+                android:id="@+id/imageViewStop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/check_box_outline_blank_fill0_wght300_grad0_opsz48" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Space
+        android:id="@+id/pomodoroTimerSpaceFinal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

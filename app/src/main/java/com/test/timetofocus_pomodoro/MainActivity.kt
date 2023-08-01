@@ -15,6 +15,12 @@ class MainActivity : AppCompatActivity() {
         var POMODORO_TIMER_FRAGMENT = "PomodoroTimerFragment"
     }
 
+    // 다이얼로그에서 설정한 시간값을 저장
+    var focusMinute: Int = 0
+    var focusSecond: Int = 0
+    var restMinute: Int = 0
+    var restSecond: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
