@@ -1,0 +1,9 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+  <path
+      android:fillColor="@color/blueberry_lighter"
+      android:pathData="M602.16,478.39 L285.23,161.85q-8.69,-9.08 -8.88,-22.69 -0.19,-13.61 8.88,-22.92 9.69,-9.69 23.31,-9.69t23.31,9.69l322.08,322.08q9,8.61 12.62,19.04 3.62,10.42 3.62,21.04 0,11 -3.62,21.42 -3.62,10.42 -12.62,19.04L331.23,841.54q-9.69,9.69 -23,9.38 -13.31,-0.31 -23,-10 -9.08,-9.31 -9.38,-22.61 -0.31,-13.31 9.38,-23l316.92,-316.92Z"/>
+</vector>
