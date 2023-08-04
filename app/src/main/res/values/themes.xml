@@ -8,4 +8,25 @@
     </style>
 
     <style name="Theme.TimeToFocus_Pomodoro" parent="Base.Theme.TimeToFocus_Pomodoro" />
+
+    <!--Dialog Theme-->
+    <style name="DialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
+        <item name="colorSurface">@color/blueberry_deep</item>
+        <item name="materialAlertDialogTitleIconStyle">@style/MaterialAlertDialog.MaterialComponents.Title.Icon.CenterStacked</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/ContentSupportingText</item>
+        <item name="buttonBarPositiveButtonStyle">@style/ButtonsThemeAttributes</item>
+        <item name="buttonBarNegativeButtonStyle">@style/ButtonsThemeAttributes</item>
+    </style>
+
+    <!--Dialog Theme 하위설정들-->
+    <style name="ContentSupportingText" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">@color/blueberry_lighter</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.HeadlineMedium</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="ButtonsThemeAttributes" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/blueberry_baby</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.HeadlineMedium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>
