@@ -1,5 +1,6 @@
 package com.test.timetofocus_pomodoro
 
+import android.content.DialogInterface
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.Html
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.timetofocus_pomodoro.databinding.FragmentPomodoroTimerBinding
 
 class PomodoroTimerFragment : Fragment() {
@@ -70,15 +72,28 @@ class PomodoroTimerFragment : Fragment() {
             // Stop 터치
             imageViewStop.setOnClickListener {
                 // 그만두기 다이얼로그
-                // TODO()
+                val builder = MaterialAlertDialogBuilder(mainActivity, R.style.DialogTheme).apply {
+                    // 아이콘
+                    setIcon(R.drawable.warning_fill0_wght300_grad0_opsz48)
+                    setTitle(" ") // 빈칸이라도 있어야 아이콘이 표시됩니다.
 
-                val colorInt = mainActivity.resources.getColor(R.color.blueberry_lighter, null)
-                imageViewClock.setColorFilter(colorInt)
-                textViewTime.setTextColor(colorInt)
-                layoutPlay.visibility = View.VISIBLE
-                layoutRunning.visibility = View.GONE
+                    //메시지
+                    setMessage("정말로 그만 두시겠습니까?")
 
-                setTimerLayout.isClickable = true
+                    setNegativeButton("아니요", null)
+                    setPositiveButton("네") { dialogInterface: DialogInterface, i: Int ->
+                        // main으로 돌아가기
+                        val colorInt =
+                            mainActivity.resources.getColor(R.color.blueberry_lighter, null)
+                        imageViewClock.setColorFilter(colorInt)
+                        textViewTime.setTextColor(colorInt)
+                        layoutPlay.visibility = View.VISIBLE
+                        layoutRunning.visibility = View.GONE
+
+                        setTimerLayout.isClickable = true
+                    }
+                }
+                builder.show()
             }
         }
 
