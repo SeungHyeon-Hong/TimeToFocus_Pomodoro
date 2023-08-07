@@ -1,7 +1,12 @@
 package com.test.timetofocus_pomodoro
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -24,12 +29,32 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val splashScreen = installSplashScreen()
+        splashScreenCustomizing(splashScreen)
+
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
         replaceFragment(POMODORO_TIMER_FRAGMENT, false, false)
 
         setContentView(activityMainBinding.root)
     }
+
+    fun splashScreenCustomizing(splashScreen: SplashScreen){
+        splashScreen.setOnExitAnimationListener{
+            val objectAnnotation=
+                ObjectAnimator.ofPropertyValuesHolder()
+            objectAnnotation.duration=2000
+            objectAnnotation.addListener(object: AnimatorListenerAdapter(){
+                override fun onAnimationEnd(animation: Animator) {
+                    // SplashScreen을 제거한다.
+                    it.remove()
+                }
+            })
+            // 애니메이션 가동
+            objectAnnotation.start()
+        }
+    }
+
 
     // 지정한 Fragment를 보여주는 메서드
     fun replaceFragment(name: String, addToBackStack: Boolean, animate: Boolean) {
