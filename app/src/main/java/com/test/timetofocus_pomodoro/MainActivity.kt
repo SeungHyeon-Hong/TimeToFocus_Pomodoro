@@ -39,12 +39,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
     }
 
-    fun splashScreenCustomizing(splashScreen: SplashScreen){
-        splashScreen.setOnExitAnimationListener{
-            val objectAnnotation=
+    fun splashScreenCustomizing(splashScreen: SplashScreen) {
+        splashScreen.setOnExitAnimationListener {
+            val objectAnnotation =
                 ObjectAnimator.ofPropertyValuesHolder()
-            objectAnnotation.duration=2000
-            objectAnnotation.addListener(object: AnimatorListenerAdapter(){
+            objectAnnotation.duration = 2000
+            objectAnnotation.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     // SplashScreen을 제거한다.
                     it.remove()
