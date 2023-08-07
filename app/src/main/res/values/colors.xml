@@ -13,4 +13,6 @@
     <!--alert colors-->
     <color name="raspberry_baby">#F5A8B7</color>
     <color name="raspberry_deep">#F53B5E</color>
+    <!--splash_background-->
+    <color name="splash_background">#0B385F</color>
 </resources>
