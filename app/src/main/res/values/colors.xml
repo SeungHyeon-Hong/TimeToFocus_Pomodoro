@@ -10,6 +10,7 @@
     <color name="blueberry_blue">#3373B0</color>
     <color name="blueberry_deep">#0B385F</color>
     <color name="blueberry_darken">#1C2127</color>
+    <color name="time_picker_dialog_area">#0A2F50</color>
     <!--alert colors-->
     <color name="raspberry_baby">#F5A8B7</color>
     <color name="raspberry_deep">#F53B5E</color>
