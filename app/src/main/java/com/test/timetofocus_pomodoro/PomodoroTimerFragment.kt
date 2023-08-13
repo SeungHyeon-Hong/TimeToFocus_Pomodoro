@@ -1,5 +1,6 @@
 package com.test.timetofocus_pomodoro
 
+import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.res.Resources
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.test.timetofocus_pomodoro.databinding.FragmentPomodoroTimerBinding
+import com.test.timetofocus_pomodoro.databinding.LayoutTimepickerDialogBinding
 
 class PomodoroTimerFragment : Fragment() {
 
@@ -37,7 +39,16 @@ class PomodoroTimerFragment : Fragment() {
             // 타이머 셋팅 UI 터치
             setTimerLayout.setOnClickListener {
                 // 타임피커 다이얼로그
-                // TODO()
+                val builder = MaterialAlertDialogBuilder(mainActivity, R.style.DialogTheme).apply{
+                    //커스텀 다이얼로그 뷰바인딩
+                    val layoutTimepickerDialogBinding=LayoutTimepickerDialogBinding.inflate(layoutInflater)
+                    //커스텀 적용
+                    setView(layoutTimepickerDialogBinding.root)
+
+                    setNegativeButton("취소", null)
+                    setPositiveButton("적용", null)
+                }
+                builder.show()
 
                 // 집중 최소시간 25분, 휴식 최소시간 5분
                 setTime(25, 0, 5, 0)
