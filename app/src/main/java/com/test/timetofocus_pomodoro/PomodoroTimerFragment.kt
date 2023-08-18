@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.res.Resources
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,9 @@ class PomodoroTimerFragment : Fragment() {
 
     lateinit var fragmentPomodoroTimerBinding: FragmentPomodoroTimerBinding
     lateinit var mainActivity: MainActivity
+
+    var focusState: FocusState = FocusState.FOCUS
+    var timer: CountDownTimer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +36,8 @@ class PomodoroTimerFragment : Fragment() {
         fragmentPomodoroTimerBinding.run {
             layoutPlay.visibility = View.VISIBLE
             layoutRunning.visibility = View.GONE
+
+            focusState = FocusState.FOCUS
         }
 
         // 동작
@@ -56,8 +62,7 @@ class PomodoroTimerFragment : Fragment() {
 
             // Play 터치
             imageViewPlay.setOnClickListener {
-                // 시작
-
+                // 비활성 UI
                 val colorInt = mainActivity.resources.getColor(R.color.blueberry_blue, null)
                 imageViewClock.setColorFilter(colorInt)
                 textViewTime.setTextColor(colorInt)
@@ -67,17 +72,52 @@ class PomodoroTimerFragment : Fragment() {
                 setTimerLayout.isClickable = false
 
                 // 집중, 휴식 시간 분기
-                if (true) {
-                    val msg = "지금은 <font color=\"#${
-                        String.format(
-                            "%X",
-                            mainActivity.resources.getColor(R.color.raspberry_deep, null)
-                        ).substring(2)
-                    }\">집중</font> 시간입니다"
-                    textViewStateMsg.text = (Html.fromHtml(msg, Html.FROM_HTML_MODE_LEGACY))
-                } else {
-                    textViewStateMsg.text = "지금은 휴식 시간입니다"
+                val totalMillis = when (focusState) {
+                    FocusState.FOCUS -> {
+                        val msg = "지금은 <font color=\"#${
+                            String.format(
+                                "%X",
+                                mainActivity.resources.getColor(R.color.raspberry_deep, null)
+                            ).substring(2)
+                        }\">집중</font> 시간입니다"
+                        textViewStateMsg.text = (Html.fromHtml(msg, Html.FROM_HTML_MODE_LEGACY))
+
+                        (mainActivity.focusMinute * 60 + mainActivity.focusSecond).toLong() * 1000
+                    }
+
+                    FocusState.REST -> {
+                        textViewStateMsg.text = "지금은 휴식 시간입니다"
+
+                        (mainActivity.restMinute * 60 + mainActivity.restSecond).toLong() * 1000
+                    }
                 }
+
+                // 타이머 일단정지
+                if (timer != null) {
+                    timer!!.cancel()
+                    timer = null
+                }
+
+                timer = object : CountDownTimer(totalMillis, 1000) {
+                    override fun onFinish() {
+                        // When timer is finished
+                        // Execute your code here
+                        focusState = when (focusState) {
+                            FocusState.FOCUS -> FocusState.REST
+                            FocusState.REST -> FocusState.FOCUS
+                        }
+
+                        stopTimer()
+                    }
+
+                    override fun onTick(millisUntilFinished: Long) {
+                        // millisUntilFinished    The amount of time until finished.
+                        fragmentPomodoroTimerBinding.textViewCountdown.text =
+                            millisToString(millisUntilFinished)
+                    }
+                }
+                timer!!.start()
+
             }
 
             // Stop 터치
@@ -93,15 +133,8 @@ class PomodoroTimerFragment : Fragment() {
 
                     setNegativeButton("아니요", null)
                     setPositiveButton("네") { dialogInterface: DialogInterface, i: Int ->
-                        // main으로 돌아가기
-                        val colorInt =
-                            mainActivity.resources.getColor(R.color.blueberry_lighter, null)
-                        imageViewClock.setColorFilter(colorInt)
-                        textViewTime.setTextColor(colorInt)
-                        layoutPlay.visibility = View.VISIBLE
-                        layoutRunning.visibility = View.GONE
-
-                        setTimerLayout.isClickable = true
+                        stopTimer()
+                        focusState = FocusState.FOCUS
                     }
                 }
                 builder.show()
@@ -145,9 +178,7 @@ class PomodoroTimerFragment : Fragment() {
         // 문자열 만들기
         var timeText = ""
         fun addDigit(digit: Int) {
-            if (digit == 0) timeText += "0"
-            else if (digit < 10) timeText += "  "
-            timeText += digit.toString()
+            timeText += if (digit == 0) "00" else if (digit < 10) "  $digit" else digit.toString()
         }
         timeText = "집중 "
         addDigit(focusMinute)
@@ -162,4 +193,41 @@ class PomodoroTimerFragment : Fragment() {
         fragmentPomodoroTimerBinding.textViewTime.text = timeText
     }
 
+    fun millisToString(millis: Long): String {
+        if (millis <= 0)
+            return "00:00"
+
+        val totalSec = millis / 1000 + 1
+        val min = totalSec / 60
+        val sec = totalSec % 60
+
+        var time = if (min == 0L) "00" else if (min < 10) "  $min" else min.toString()
+        time += ":"
+        time += if (sec == 0L) "00" else if (sec < 10) "  $sec" else sec.toString()
+        return time
+    }
+
+    private fun stopTimer() {
+        // 타이머 초기화
+        timer!!.cancel()
+        timer = null
+
+        // 화면 초기화
+        fragmentPomodoroTimerBinding.run {
+            // main으로 돌아가기
+            val colorInt =
+                mainActivity.resources.getColor(R.color.blueberry_lighter, null)
+            imageViewClock.setColorFilter(colorInt)
+            textViewTime.setTextColor(colorInt)
+            layoutPlay.visibility = View.VISIBLE
+            layoutRunning.visibility = View.GONE
+
+            setTimerLayout.isClickable = true
+        }
+    }
+}
+
+enum class FocusState {
+    FOCUS,
+    REST
 }
